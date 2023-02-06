@@ -1,0 +1,123 @@
+# Set up the prompt
+
+{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.hostname "DESKTOP-G1CTBNV")) }}
+autoload -Uz promptinit
+promptinit
+prompt fire red magenta blue white white white
+{{ end }}
+
+setopt histignorealldups sharehistory
+
+# Use emacs keybindings even if our EDITOR is set to vi
+bindkey -v
+
+# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.zsh_history
+
+# fpash
+fpath+=~/.zfunc
+FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+# Use modern completion system
+autoload -Uz compinit && compinit
+
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' menu select=2
+eval "$(dircolors -b)"
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' verbose true
+
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+source <(kubectl completion zsh)
+{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.hostname "DESKTOP-G1CTBNV")) }}
+command -v flux >/dev/null && . <(flux completion zsh)
+{{ end }}
+# cdr
+if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]]; then
+     autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+     add-zsh-hook chpwd chpwd_recent_dirs
+     zstyle ':completion:*' recent-dirs-insert both
+     zstyle ':chpwd:*' recent-dirs-default true
+     zstyle ':chpwd:*' recent-dirs-max 1000
+     zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/chpwd-recent-dirs"
+fi
+
+# functions
+## peco
+function peco-history-selection() {
+    BUFFER=`history -n 1 | tac  | awk '!a[$0]++' | peco`
+        CURSOR=$#BUFFER
+	    zle reset-prompt
+    }
+
+zle -N peco-history-selection
+bindkey '^R' peco-history-selection
+
+function peco-cdr () {
+    local selected_dir="$(cdr -l | sed 's/^[0-9]\+ \+//' | peco --prompt="cdr >" --query "$LBUFFER")"
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+	zle accept-line
+	fi
+}
+zle -N peco-cdr
+bindkey '^E' peco-cdr
+
+{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.hostname "DESKTOP-G1CTBNV")) }}
+# pipenv
+export PIPENV_VENV_IN_PROJECT=1
+
+# set up path
+source /home/dora56/.cargo/env
+. /home/linuxbrew/.linuxbrew/opt/asdf/libexec/asdf.sh
+
+# wsl2-ssh-pageant
+## ssh
+export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
+if ! ss -a | grep -q "$SSH_AUTH_SOCK"; then
+  rm -f "$SSH_AUTH_SOCK"
+  wsl2_ssh_pageant_bin="$HOME/.ssh/wsl2-ssh-pageant.exe"
+  if test -x "$wsl2_ssh_pageant_bin"; then
+    (setsid nohup socat UNIX-LISTEN:"$SSH_AUTH_SOCK,fork" EXEC:"$wsl2_ssh_pageant_bin" >/dev/null 2>&1 &)
+  else
+    echo >&2 "WARNING: $wsl2_ssh_pageant_bin is not executable."
+  fi
+  unset wsl2_ssh_pageant_bin
+fi
+
+## gpg
+export GPG_AGENT_SOCK="$HOME/.gnupg/S.gpg-agent"
+if ! ss -a | grep -q "$GPG_AGENT_SOCK"; then
+  rm -rf "$GPG_AGENT_SOCK"
+  wsl2_ssh_pageant_bin="$HOME/.ssh/wsl2-ssh-pageant.exe"
+  if test -x "$wsl2_ssh_pageant_bin"; then
+    (setsid nohup socat UNIX-LISTEN:"$GPG_AGENT_SOCK,fork" EXEC:"$wsl2_ssh_pageant_bin --gpg S.gpg-agent" >/dev/null 2>&1 &)
+  else
+    echo >&2 "WARNING: $wsl2_ssh_pageant_bin is not executable."
+  fi
+  unset wsl2_ssh_pageant_bin
+fi
+
+##
+export PATH="$HOME/.poetry/bin:$PATH"
+export PATH=$PATH:'/mnt/c/Users/dorad/AppData/Local/Programs/Microsoft VS Code/bin'
+
+## golang
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/home/dora56/go/bin
+{{ end }}
