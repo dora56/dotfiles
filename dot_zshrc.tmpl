@@ -1,11 +1,4 @@
-# Set up the prompt
-
-{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.hostname "DESKTOP-G1CTBNV")) }}
-autoload -Uz promptinit
-promptinit
-prompt fire red magenta blue white white white
-{{ end }}
-
+# commons
 setopt histignorealldups sharehistory
 
 # Use emacs keybindings even if our EDITOR is set to vi
@@ -31,9 +24,6 @@ zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' menu select=2
-{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.hostname "DESKTOP-G1CTBNV")) }}
-eval "$(dircolors -b)"
-{{ end }}
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
@@ -46,9 +36,6 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.hostname "DESKTOP-G1CTBNV")) }}
-command -v flux >/dev/null && . <(flux completion zsh)
-{{ end }}
 # cdr
 if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]]; then
      autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
@@ -97,10 +84,20 @@ source <(kubectl completion zsh)
 eval "$(op completion zsh)"; compdef _op op
 {{ end}}
 
-# Linux
-{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.hostname "DESKTOP-G1CTBNV")) }}
+# wsl2
+## see https://github.com/deflis/dotfiles/blob/main/run_once_install_linux.sh.cmd.tmpl
+{{ if (eq .chezmoi.os "linux") }}
+{{    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+{{      if (.chezmoi.kernel.osrelease | lower | contains "wsl2") }}
+# Set up the prompt
+autoload -Uz promptinit
+promptinit
+prompt fire red magenta blue white white white
+eval "$(dircolors -b)"
+
 # completion
 source <(kubectl completion zsh)
+command -v flux >/dev/null && . <(flux completion zsh)
 
 # pipenv
 export PIPENV_VENV_IN_PROJECT=1
@@ -144,4 +141,6 @@ export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:/home/dora56/go/bin
-{{ end }}
+{{      end }}
+{{    end }}
+{{  end }}
