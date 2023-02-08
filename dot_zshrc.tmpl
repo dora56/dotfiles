@@ -94,6 +94,7 @@ eval "$(starship init zsh)"
 
 # completion
 source <(kubectl completion zsh)
+eval "$(op completion zsh)"; compdef _op op
 {{ end}}
 
 # Linux
