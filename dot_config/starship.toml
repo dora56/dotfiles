@@ -1,0 +1,14 @@
+add_newline = false
+
+[azure]
+disabled = false
+
+[time]
+disabled = false
+format = '[\[ $time \]]($style) '
+time_format = '%F %T'
+
+[username]
+format = '[$user]($style) '
+disabled = false
+show_always = true
