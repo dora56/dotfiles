@@ -9,6 +9,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3
+      - name: echo GITHUB_ACTIONS
+        run: echo "GITHUB_ACTIONS "$GITHUB_ACTIONS""
       - name: Install dotfiles
         run: sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply -S .
       
