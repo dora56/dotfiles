@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 set -e
 
 echo "-----------------------------"
@@ -6,7 +6,7 @@ echo "-         Homebrew          -"
 echo "-----------------------------"
 if [ -z "$(ls /opt/homebrew/bin)" ]; then
     echo "Download Homebrew."
-    eval /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 if command -v chezmoi >/dev/null 2>&1; then
@@ -15,11 +15,19 @@ if command -v chezmoi >/dev/null 2>&1; then
 else
     echo "chezmoi setup Start..."
     brew install chezmoi
-    chezmoi init dora56
-    echo ""
+    chezmoi init dora56 --apply
+    echo "dotfiles clone finish."
 fi
 
-brew bundle --file ~/Brewfile
+actions=${GITHUB_ACTIONS:-false}
+if [ "$actions" = true ]; then
+    echo "Test install..."
+    brew bundle --file ~/tests/Brewfile
+else
+echo "Brewfiles install..."
+    brew bundle --file ~/Brewfile
+fi
+
 
 if [ -z "$(ls "$HOME"/.cargo)" ]; then
     echo "-----------------------------"
