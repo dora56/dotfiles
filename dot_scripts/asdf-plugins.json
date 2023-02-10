@@ -1,0 +1,28 @@
+{
+    "plugins": [
+      {
+        "name": "deno",
+        "version": "latest"
+      },
+      {
+        "name": "dotnet",
+        "version": "latest"
+      },
+      {
+        "name": "kubectl",
+        "version": "latest"
+      },
+      {
+        "name": "nodejs",
+        "version": "latest"
+      },
+      {
+        "name": "php",
+        "version": "latest"
+      },
+      {
+        "name": "python",
+        "version": "latest"
+      }
+    ]
+  }
