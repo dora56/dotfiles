@@ -97,6 +97,12 @@ eval "$(starship init zsh)"
 # completion
 source <(kubectl completion zsh)
 eval "$(op completion zsh)"; compdef _op op
+
+# path
+export GOROOT=/usr/local/.go
+export GOPATH=$HOME/.go
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOPATH/bin
 {{ end}}
 
 # wsl2
@@ -154,9 +160,9 @@ export PATH=$PATH:'/mnt/c/Users/dorad/AppData/Local/Programs/Microsoft VS Code/b
 
 ## golang
 export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/home/dora56/go/bin
+export GOPATH=$HOME/.go
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOPATH/bin
 {{      end }}
 {{    end }}
 {{  end }}
