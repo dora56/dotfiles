@@ -14,5 +14,5 @@ jobs:
         run: echo "GITHUB_ACTIONS "$GITHUB_ACTIONS""
 
       - name: Test Tools install.
-        run: mac-install.sh
+        run: ./mac-install.sh
         
