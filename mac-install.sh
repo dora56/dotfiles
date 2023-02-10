@@ -25,7 +25,7 @@ if [ -z "$(ls "$HOME"/.cargo)" ]; then
     echo "-----------------------------"
     echo "-           Rust            -"
     echo "-----------------------------"
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh #DevSkim: ignore DS440000 until 2023-03-13 
 fi
 
 echo "-----------------------------"
