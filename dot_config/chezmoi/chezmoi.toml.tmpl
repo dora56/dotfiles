@@ -1,0 +1,8 @@
+{{/* @see: https://www.chezmoi.io/user-guide/machines/containers-and-vms/ */}}
+{{- $github_actions:= env "GITHUB_ACTIONS" | not | not -}}
+
+[data]
+    github_actions = {{ $github_actions }}
+[edit]
+    command = "code"
+    args = ["--wait"]
