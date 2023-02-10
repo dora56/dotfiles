@@ -15,8 +15,8 @@ if command -v chezmoi >/dev/null 2>&1; then
 else
     echo "chezmoi setup Start..."
     brew install chezmoi
-    chezmoi init dora56
-    echo ""
+    chezmoi init dora56 --apply
+    echo "dotfiles clone finish."
 fi
 
 brew bundle --file ~/Brewfile
