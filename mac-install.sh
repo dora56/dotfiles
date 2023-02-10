@@ -39,7 +39,16 @@ fi
 echo "-----------------------------"
 echo "-            asdf           -"
 echo "-----------------------------"
+if command -v asdf >/dev/null 2>&1; then
+    echo ""
+else
+    /bin/bash -c "$(brew --prefix asdf)/libexec/asdf.sh"
+fi
+
 asdf_plugins="$HOME/.scripts/asdf-plugins.json"
+if [ "$actions" = true ]; then
+    asdf_plugins=~/tests/asdf-plugins.json
+fi
 plugins=$(jq '.plugins[].name' "$asdf_plugins" | tr -d '"')
 
 for plugin in $plugins; do

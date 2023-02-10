@@ -1,0 +1,12 @@
+{
+    "plugins": [
+      {
+        "name": "deno",
+        "version": "latest"
+      },
+      {
+        "name": "dotnet",
+        "version": "latest"
+      }
+    ]
+  }
