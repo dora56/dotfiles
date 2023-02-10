@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bush
 set -e
 
 echo "-----------------------------"
@@ -6,7 +6,7 @@ echo "-         Homebrew          -"
 echo "-----------------------------"
 if [ -z "$(ls /opt/homebrew/bin)" ]; then
     echo "Download Homebrew."
-    eval /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 if command -v chezmoi >/dev/null 2>&1; then
