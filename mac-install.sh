@@ -19,7 +19,14 @@ else
     echo "dotfiles clone finish."
 fi
 
-brew bundle --file ~/Brewfile
+actions=${GITHUB_ACTIONS:-false}
+if [ "$actions" = true ]; then
+  echo "Test install..."
+  brew bundle --file ~/tests/Brewfile
+else
+  brew bundle --file ~/Brewfile
+fi
+
 
 if [ -z "$(ls "$HOME"/.cargo)" ]; then
     echo "-----------------------------"

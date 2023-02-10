@@ -49,7 +49,6 @@ brew "zlib"
 brew "zsh-history-substring-search"
 
 {{ if eq .chezmoi.os "darwin" }}
-{{ if eq .github_actions false }}
 brew "mas"
 cask "1password"
 cask "1password-cli"
@@ -86,5 +85,4 @@ mas "Keynote", id: 409183694
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Toggl Track", id: 1291898086
-{{ end }}
 {{ end }}
