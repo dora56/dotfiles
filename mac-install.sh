@@ -54,7 +54,7 @@ plugins=$(jq '.plugins[].name' "$asdf_plugins" | tr -d '"')
 for plugin in $plugins; do
     version=$(jq ".plugins[] | select(.name==\"$plugin\") | .version" "$asdf_plugins" | tr -d '"')
     if [ "$(asdf plugin list | grep "$plugin")" != "$plugin" ]; then
-        plugin_install="asdf pulgin add $plugin"
+        plugin_install="asdf plugin add $plugin"
         $plugin_install
     fi
     asdf plugin update --all
