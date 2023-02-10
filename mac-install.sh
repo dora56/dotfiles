@@ -28,6 +28,25 @@ echo "Brewfiles install..."
     brew bundle --file ~/Brewfile
 fi
 
+echo "-----------------------------"
+echo "-            dir            -"
+echo "-----------------------------"
+
+if [ -z "$(ls "$HOME"/Development)" ]; then
+    echo "mkdir Development"
+    mkdir -p ~/Development
+fi
+
+if [ -z "$(ls "$HOME"/.cache)" ]; then
+    echo "mkdir .cache"
+    mkdir -p ~/.cache
+fi
+
+if [ -z "$(ls "$HOME"/.zfunc)" ]; then
+    echo "mkdir .zfunc"
+    mkdir -p ~/.cache
+fi
+
 
 if [ -z "$(ls "$HOME"/.cargo)" ]; then
     echo "-----------------------------"
