@@ -21,10 +21,11 @@ fi
 
 actions=${GITHUB_ACTIONS:-false}
 if [ "$actions" = true ]; then
-  echo "Test install..."
-  brew bundle --file ~/tests/Brewfile
+    echo "Test install..."
+    brew bundle --file ~/tests/Brewfile
 else
-  brew bundle --file ~/Brewfile
+echo "Brewfiles install..."
+    brew bundle --file ~/Brewfile
 fi
 
 
