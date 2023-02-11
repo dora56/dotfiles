@@ -12,3 +12,18 @@ time_format = '%F %T'
 format = '[$user]($style) '
 disabled = false
 show_always = true
+
+[package]
+symbol = " "
+
+[python]
+symbol = " "
+
+[rlang]
+symbol = "ﳒ "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
