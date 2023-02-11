@@ -3,9 +3,9 @@ tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
 
-{{ if eq .chezmoi.os "darwin" }}
+{{- if eq .chezmoi.os "darwin" }}
 cask_args appdir: "/Applications"
-{{ end }}
+{{- end }}
 
 brew "autoconf"
 brew "automake"
@@ -52,7 +52,7 @@ brew "exa"
 brew "bat"
 brew "ghq"
 
-{{ if eq .chezmoi.os "darwin" }}
+{{- if eq .chezmoi.os "darwin" }}
 brew "mas"
 cask "1password"
 cask "1password-cli"
@@ -89,4 +89,4 @@ mas "Keynote", id: 409183694
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Toggl Track", id: 1291898086
-{{ end }}
+{{- end }}
