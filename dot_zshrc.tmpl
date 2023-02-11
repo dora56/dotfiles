@@ -58,25 +58,34 @@ if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]
 fi
 
 # functions
-## peco
-function peco-history-selection() {
-    BUFFER=`history -n 1 | tac  | awk '!a[$0]++' | peco`
-        CURSOR=$#BUFFER
-	    zle reset-prompt
-    }
-
-zle -N peco-history-selection
-bindkey '^R' peco-history-selection
-
-function peco-cdr () {
-    local selected_dir="$(cdr -l | sed -E 's/^[0-9]+ *//' | peco --prompt="cdr >" --query "$LBUFFER")"
+## fzf
+function fzf-cdr () {
+    local selected_dir="$(cdr -l | sed -E 's/^[0-9]+ *//' | fzf --prompt="cdr >" --query "$LBUFFER")"
     if [ -n "$selected_dir" ]; then
         BUFFER="cd ${selected_dir}"
         zle accept-line
     fi
 }
-zle -N peco-cdr
-bindkey '^E' peco-cdr
+zle -N fzf-cdr
+bindkey '^E' fzf-cdr
+
+function history-fzf() {
+  local tac
+
+  if which tac > /dev/null; then
+    tac="tac"
+  else
+    tac="tail -r"
+  fi
+
+  BUFFER=$(history -n 1 | eval $tac | fzf --query "$LBUFFER")
+  CURSOR=$#BUFFER
+
+  zle reset-prompt
+}
+
+zle -N history-fzf
+bindkey '^r' history-fzf
 
 # common alias
 # cd
@@ -93,6 +102,10 @@ alias bb='brew bundle --file ~/Brewfile'
 alias chbb='cha && bb'
 alias grep='rg'
 alias cat='bat'
+
+# export
+## fzf
+export FZF_DEFAULT_OPTS='--height 50% --layout=reverse'
 
 # Mac
 {{ if eq .chezmoi.os "darwin" }}
