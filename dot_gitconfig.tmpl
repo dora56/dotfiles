@@ -1,25 +1,47 @@
 {{- if (eq .chezmoi.os "linux") }}
 {{-    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 [credential "https://github.com"]
-	helper = 
 	helper = !/home/linuxbrew/.linuxbrew/Cellar/gh/1.7.0/bin/gh auth git-credential
 {{- end }}
 {{- end }}
 [user]
 	email = doradora56@gmail.com
 	name = dora56
+{{- if eq .chezmoi.os "darwin" }}
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQCzb/5crM41fqi32d7e3QRW7ZLXvxQyX8CyfGCnzKn
+{{ end }}
 [init]
 	defaultBranch = main
+
 [core]
 	autocrlf = false
-{{ if eq .chezmoi.os "darwin" }}
+
+{{ if eq .chezmoi.os "darwin" -}}
+[includeIf "gitdir:~/Development/work/"]
+  	path = ~/Development/work/.gitconfig
+
+[gpg]
+  	format = ssh
+
+[gpg "ssh"]
+  	program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+
+[commit]
+  	gpgsign = true
+
 [ghq]
 	root = ~/Development/src
-{{ end }}
-{{ if (eq .chezmoi.os "linux") }}
-{{    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+[ghq "https://github.com/{{- (onepasswordItemFields "v5je2bkojcs2pgobi3codtha4e").org1.value -}}"]
+	root = /Development/work
+[ghq "https://github.com/{{- (onepasswordItemFields "v5je2bkojcs2pgobi3codtha4e").org2.value -}}"]
+	root = /Development/work
+[ghq "https://github.com/{{- (onepasswordItemFields "v5je2bkojcs2pgobi3codtha4e").org3.value -}}"]
+	root = /Development/work
+{{- end }}
+
+{{- if (eq .chezmoi.os "linux") }}
+{{-    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 [credential]
 	helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager-core.exe
-{{ end }}
-{{ end }}
-
+{{- end }}
+{{- end }}
