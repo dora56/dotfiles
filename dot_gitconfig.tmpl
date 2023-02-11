@@ -1,10 +1,10 @@
-{{ if eq .chezmoi.hostname "DESKTOP-G1CTBNV" }}
-{{ if eq .chezmoi.os "linux" }}
+{{- if (eq .chezmoi.os "linux") }}
+{{-    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 [credential "https://github.com"]
 	helper = 
 	helper = !/home/linuxbrew/.linuxbrew/Cellar/gh/1.7.0/bin/gh auth git-credential
-{{ end }}
-{{ end }}
+{{- end }}
+{{- end }}
 [user]
 	email = doradora56@gmail.com
 	name = dora56
@@ -12,8 +12,12 @@
 	defaultBranch = main
 [core]
 	autocrlf = false
-{{ if eq .chezmoi.hostname "DESKTOP-G1CTBNV" }}
-{{ if eq .chezmoi.os "linux" }}
+{{ if eq .chezmoi.os "darwin" }}
+[ghq]
+	root = ~/Development/src
+{{ end }}
+{{ if (eq .chezmoi.os "linux") }}
+{{    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 [credential]
 	helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager-core.exe
 {{ end }}
