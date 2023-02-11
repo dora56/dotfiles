@@ -11,4 +11,7 @@ backups/** # ignore all contents of backups folder in chezmoi directory
 
 {{- if default (env "GITHUB_ACTIONS" | not | not) (index . "github_actions") }}
 .gitconfig
+{{ else }}
+tests/
+tests/**
 {{- end }}
