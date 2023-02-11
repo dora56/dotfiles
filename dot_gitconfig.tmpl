@@ -1,3 +1,8 @@
+{{- $https_github:= "https://github.com/"}}
+{{- $ssh_github:= "git@github.com:"}}
+{{- $org1:= (onepasswordItemFields "v5je2bkojcs2pgobi3codtha4e").org1.value}}
+{{- $org2:= (onepasswordItemFields "v5je2bkojcs2pgobi3codtha4e").org2.value}}
+{{- $org3:= (onepasswordItemFields "v5je2bkojcs2pgobi3codtha4e").org3.value}}
 {{- if (eq .chezmoi.os "linux") }}
 {{-    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 [credential "https://github.com"]
@@ -18,7 +23,7 @@
 	excludesFile = ~/.gitignore
 
 {{ if eq .chezmoi.os "darwin" -}}
-[includeIf "gitdir:~/Development/work/"]
+[includeIf "gitdir:~/Development/work/**"]
   	path = ~/Development/work/.gitconfig
 
 [gpg]
@@ -32,12 +37,19 @@
 
 [ghq]
 	root = ~/Development/src
-[ghq "https://github.com/{{- (onepasswordItemFields "v5je2bkojcs2pgobi3codtha4e").org1.value -}}"]
-	root = /Development/work
-[ghq "https://github.com/{{- (onepasswordItemFields "v5je2bkojcs2pgobi3codtha4e").org2.value -}}"]
-	root = /Development/work
-[ghq "https://github.com/{{- (onepasswordItemFields "v5je2bkojcs2pgobi3codtha4e").org3.value -}}"]
-	root = /Development/work
+[ghq "{{print $https_github $org1}}"]
+	root = ~/Development/work
+[ghq "{{print $https_github $org2}}"]
+	root = ~/Development/work
+[ghq "{{print $https_github $org3}}"]
+	root = ~/Development/work
+
+[url "{{print $ssh_github $org1}}"]
+	pushInsteadOf = "{{print $https_github $org1}}"
+[url "{{print $ssh_github $org2}}"]
+	pushInsteadOf = "{{print $https_github $org2}}"
+[url "{{print $ssh_github $org3}}"]
+	pushInsteadOf = "{{print $https_github $org3}}"
 {{- end }}
 
 {{- if (eq .chezmoi.os "linux") }}
