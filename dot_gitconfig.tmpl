@@ -15,6 +15,7 @@
 
 [core]
 	autocrlf = false
+	excludesFile = ~/.gitignore
 
 {{ if eq .chezmoi.os "darwin" -}}
 [includeIf "gitdir:~/Development/work/"]
