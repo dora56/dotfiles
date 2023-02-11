@@ -83,8 +83,16 @@ bindkey '^E' peco-cdr
 alias cdh='cd $HOME'
 
 # ls
+alias ls='exa'
 alias la='ls -la'
 alias ll='ls -l'
+
+# others
+alias cha='chezmoi apply'
+alias bb='brew bundle --file ~/Brewfile'
+alias chbb='cha && bb'
+alias grep='rg'
+alias cat='bat'
 
 # Mac
 {{ if eq .chezmoi.os "darwin" }}
