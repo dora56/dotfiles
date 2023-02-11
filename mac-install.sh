@@ -1,6 +1,8 @@
 #! /bin/bash
 set -e
 
+actions=${GITHUB_ACTIONS:-false}
+
 echo "-----------------------------"
 echo "-         Homebrew          -"
 echo "-----------------------------"
@@ -15,11 +17,16 @@ if command -v chezmoi >/dev/null 2>&1; then
 else
     echo "chezmoi setup Start..."
     brew install chezmoi
+    brew install --cask 1password 1password-cli
+    if [ "$actions" = false ]; then
+        printf "\033[33mPlease setup 1Password and CLI.\033[0m\n"
+        printf "\033[33mIf you have completed the setup, press the Enter key.\033[0m\n"
+        read -r
+    fi
     chezmoi init dora56 --apply
     echo "dotfiles clone finish."
 fi
 
-actions=${GITHUB_ACTIONS:-false}
 if [ "$actions" = true ]; then
     echo "Test install..."
     brew bundle --file ~/tests/Brewfile
