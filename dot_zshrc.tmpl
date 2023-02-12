@@ -87,6 +87,18 @@ function history-fzf() {
 zle -N history-fzf
 bindkey '^r' history-fzf
 
+fzf-src () {
+    local repo=$(ghq list | fzf --preview "ghq list --full-path --exact {} | xargs exa -la --time-style iso --no-permissions --no-filesize --no-user")
+    if [ -n "$repo" ]; then
+        repo=$(ghq list --full-path --exact $repo)
+        BUFFER="z ${repo}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N fzf-src
+bindkey '^]' fzf-src
+
 # common alias
 # cd
 alias cdh='cd $HOME'
@@ -102,6 +114,7 @@ alias bb='brew bundle --file ~/Brewfile'
 alias chbb='cha && bb'
 alias grep='rg'
 alias cat='bat'
+alias find='fd'
 
 # export
 ## fzf
@@ -115,6 +128,7 @@ export FZF_DEFAULT_OPTS='--height 50% --layout=reverse'
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
 eval "$(starship init zsh)"
 source "$HOME/.config/op/plugins.sh"
+eval "$(zoxide init zsh)"
 
 # completion
 source <(kubectl completion zsh)
