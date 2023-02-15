@@ -134,10 +134,17 @@ source <(kubectl completion zsh)
 eval "$(op completion zsh)"; compdef _op op
 
 # path
-export GOROOT=/usr/local/.go
+# go
+export GOROOT=/usr/local/go
 export GOPATH=$HOME/.go
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$GOPATH/bin
+
+# dotnet
+export DOTNET_ROOT=/usr/local/share/dotnet/x64/
+if [ -n $DOTNET_ROOT ]; then
+  export PATH=$PATH:$DOTNET_ROOT
+fi
 {{- end}}
 
 # wsl2
@@ -195,7 +202,7 @@ export PATH=$PATH:'/mnt/c/Users/dorad/AppData/Local/Programs/Microsoft VS Code/b
 
 ## golang
 export GOROOT=/usr/local/go
-export GOPATH=$HOME/.go
+export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$GOPATH/bin
 {{-      end }}

@@ -5,7 +5,7 @@
         "version": "latest"
       },
       {
-        "name": "dotnet",
+        "name": "kubectl",
         "version": "latest"
       }
     ]
