@@ -24,5 +24,6 @@ brew "starship"
 brew "wget"
 brew "wrk"
 brew "zlib"
+brew "anki"
 
 cask "font-hack-nerd-font"
