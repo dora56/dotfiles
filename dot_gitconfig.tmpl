@@ -50,6 +50,11 @@
 	pushInsteadOf = "{{print $https_github $org2}}"
 [url "{{print $ssh_github $org3}}"]
 	pushInsteadOf = "{{print $https_github $org3}}"
+[filter "lfs"]
+        smudge = git-lfs smudge -- %f
+        process = git-lfs filter-process
+        required = true
+        clean = git-lfs clean -- %f
 {{- end }}
 
 {{- if (eq .chezmoi.os "linux") }}

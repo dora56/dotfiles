@@ -90,4 +90,13 @@ for plugin in $plugins; do
     $local_command
 done
 
+echo "-----------------------------"
+echo "-            rye            -"
+echo "-----------------------------"
+if command -v rye >/dev/null 2>&1; then
+    echo ""
+else
+    curl -sSf https://rye-up.com/get | bash
+fi
+
 printf "\033[32mCompleted.\033[m\n"
