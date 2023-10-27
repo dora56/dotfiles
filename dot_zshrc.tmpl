@@ -88,7 +88,7 @@ zle -N history-fzf
 bindkey '^r' history-fzf
 
 fzf-src () {
-    local repo=$(ghq list | fzf --preview "ghq list --full-path --exact {} | xargs exa -la --time-style iso --no-permissions --no-filesize --no-user")
+    local repo=$(ghq list | fzf --preview "ghq list --full-path --exact {} | xargs eza -la --time-style iso --no-permissions --no-filesize --no-user")
     if [ -n "$repo" ]; then
         repo=$(ghq list --full-path --exact $repo)
         BUFFER="z ${repo}"
@@ -148,6 +148,15 @@ fi
 
 # rye
 source "$HOME/.rye/env"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/r-hanaoka/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+# SDKMAN
+# THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 {{- end}}
 
