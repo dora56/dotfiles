@@ -132,6 +132,8 @@ eval "$(zoxide init zsh)"
 # completion
 source <(kubectl completion zsh)
 eval "$(op completion zsh)"; compdef _op op
+autoload bashcompinit && bashcompinit
+source $(brew --prefix)/etc/bash_completion.d/az
 
 # path
 # go
