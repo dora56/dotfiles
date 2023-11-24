@@ -160,6 +160,11 @@ export PATH="/Users/r-hanaoka/.rd/bin:$PATH"
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+# lima docker
+if [ -e /usr/local/bin/lima ]; then
+  export DOCKER_HOST=$(limactl list docker_rosetta --format 'unix://{{"{{"}}.Dir{{"}}"}}/sock/docker.sock')
+fi
+
 {{- end}}
 
 # wsl2
