@@ -137,10 +137,12 @@ source $(brew --prefix)/etc/bash_completion.d/az
 
 # path
 # go
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/.go
-export PATH=$PATH:$GOROOT/bin
-export PATH=$PATH:$GOPATH/bin
+if [ -e /usr/local/go ]; then
+  export GOROOT=/usr/local/go
+  export GOPATH=$HOME/.go
+  export PATH=$PATH:$GOROOT/bin
+  export PATH=$PATH:$GOPATH/bin
+fi
 
 # dotnet
 export DOTNET_ROOT=/usr/local/share/dotnet/x64
