@@ -151,11 +151,7 @@ if [ -n $DOTNET_ROOT ]; then
 fi
 
 # rye
-source "$HOME/.rye/env"
-
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/r-hanaoka/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+[[ -s "$HOME/.rye/env" ]] && source "$HOME/.rye/env"
 
 # SDKMAN
 # THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
