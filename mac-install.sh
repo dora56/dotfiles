@@ -51,7 +51,7 @@ fi
 
 if [ -z "$(ls "$HOME"/.zfunc)" ]; then
     echo "mkdir .zfunc"
-    mkdir -p ~/.cache
+    mkdir -p ~/.zfunc
 fi
 
 
@@ -69,41 +69,17 @@ if [ -z "$(ls "$HOME"/.sdkman)" ]; then
     curl -s "https://get.sdkman.io" | bash
 fi
 
-# echo "-----------------------------"
-# echo "-            asdf           -"
-# echo "-----------------------------"
-# if command -v asdf >/dev/null 2>&1; then
-#     echo ""
-# else
-#     /bin/bash -c "$(brew --prefix asdf)/libexec/asdf.sh"
-# fi
-
-# asdf_plugins="$HOME/.scripts/asdf-plugins.json"
-# if [ "$actions" = true ]; then
-#     asdf_plugins=~/tests/asdf-plugins.json
-# fi
-# plugins=$(jq '.plugins[].name' "$asdf_plugins" | tr -d '"')
-
-# for plugin in $plugins; do
-#     version=$(jq ".plugins[] | select(.name==\"$plugin\") | .version" "$asdf_plugins" | tr -d '"')
-#     if [ "$(asdf plugin list | grep "$plugin")" != "$plugin" ]; then
-#         plugin_install="asdf plugin add $plugin"
-#         $plugin_install
-#     fi
-#     asdf plugin update --all
-#     install_command="asdf install $plugin $version"
-#     $install_command
-#     local_command="asdf local $plugin $version"
-#     $local_command
-# done
-
 echo "-----------------------------"
 echo "-            rye            -"
 echo "-----------------------------"
 if command -v rye >/dev/null 2>&1; then
     echo ""
 else
-    curl -sSf https://rye-up.com/get | bash
+    if [ "$actions" = true ]; then
+        echo "Skip rye install."
+    else
+        curl -sSf https://rye-up.com/get | bash
+    fi
 fi
 
 printf "\033[32mCompleted.\033[m\n"
