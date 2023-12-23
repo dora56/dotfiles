@@ -1,0 +1,9 @@
+[tools]
+node = "lts"
+deno = "latest"
+kubectl = "1.28"
+
+[settings]
+jobs = 4
+asdf_compat = false
+experimental = true
