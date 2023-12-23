@@ -59,7 +59,7 @@ if [ -z "$(ls "$HOME"/.cargo)" ]; then
     echo "-----------------------------"
     echo "-           Rust            -"
     echo "-----------------------------"
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh #DevSkim: ignore DS440000 until 2023-03-13 
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh #DevSkim: ignore DS440000 until 2023-03-13
 fi
 
 if [ -z "$(ls "$HOME"/.sdkman)" ]; then
@@ -69,33 +69,33 @@ if [ -z "$(ls "$HOME"/.sdkman)" ]; then
     curl -s "https://get.sdkman.io" | bash
 fi
 
-echo "-----------------------------"
-echo "-            asdf           -"
-echo "-----------------------------"
-if command -v asdf >/dev/null 2>&1; then
-    echo ""
-else
-    /bin/bash -c "$(brew --prefix asdf)/libexec/asdf.sh"
-fi
+# echo "-----------------------------"
+# echo "-            asdf           -"
+# echo "-----------------------------"
+# if command -v asdf >/dev/null 2>&1; then
+#     echo ""
+# else
+#     /bin/bash -c "$(brew --prefix asdf)/libexec/asdf.sh"
+# fi
 
-asdf_plugins="$HOME/.scripts/asdf-plugins.json"
-if [ "$actions" = true ]; then
-    asdf_plugins=~/tests/asdf-plugins.json
-fi
-plugins=$(jq '.plugins[].name' "$asdf_plugins" | tr -d '"')
+# asdf_plugins="$HOME/.scripts/asdf-plugins.json"
+# if [ "$actions" = true ]; then
+#     asdf_plugins=~/tests/asdf-plugins.json
+# fi
+# plugins=$(jq '.plugins[].name' "$asdf_plugins" | tr -d '"')
 
-for plugin in $plugins; do
-    version=$(jq ".plugins[] | select(.name==\"$plugin\") | .version" "$asdf_plugins" | tr -d '"')
-    if [ "$(asdf plugin list | grep "$plugin")" != "$plugin" ]; then
-        plugin_install="asdf plugin add $plugin"
-        $plugin_install
-    fi
-    asdf plugin update --all
-    install_command="asdf install $plugin $version"
-    $install_command
-    local_command="asdf local $plugin $version"
-    $local_command
-done
+# for plugin in $plugins; do
+#     version=$(jq ".plugins[] | select(.name==\"$plugin\") | .version" "$asdf_plugins" | tr -d '"')
+#     if [ "$(asdf plugin list | grep "$plugin")" != "$plugin" ]; then
+#         plugin_install="asdf plugin add $plugin"
+#         $plugin_install
+#     fi
+#     asdf plugin update --all
+#     install_command="asdf install $plugin $version"
+#     $install_command
+#     local_command="asdf local $plugin $version"
+#     $local_command
+# done
 
 echo "-----------------------------"
 echo "-            rye            -"
