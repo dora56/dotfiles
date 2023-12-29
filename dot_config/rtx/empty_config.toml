@@ -1,7 +1,7 @@
 [tools]
 node = "lts"
 deno = "latest"
-kubectl = "1.28"
+kubectl = "1.28.5"
 
 [settings]
 jobs = 4
