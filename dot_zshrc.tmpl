@@ -116,6 +116,10 @@ alias grep='rg'
 alias cat='bat'
 # alias find='fd'
 
+# help command
+alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
+alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
+
 # export
 ## fzf
 export FZF_DEFAULT_OPTS='--height 50% --layout=reverse'
