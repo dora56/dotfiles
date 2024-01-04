@@ -62,13 +62,6 @@ if [ -z "$(ls "$HOME"/.cargo)" ]; then
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh #DevSkim: ignore DS440000 until 2023-03-13
 fi
 
-if [ -z "$(ls "$HOME"/.sdkman)" ]; then
-    echo "-----------------------------"
-    echo "-          SDKMAN            -"
-    echo "-----------------------------"
-    curl -s "https://get.sdkman.io" | bash
-fi
-
 echo "-----------------------------"
 echo "-            rye            -"
 echo "-----------------------------"
