@@ -162,11 +162,6 @@ export PATH="$PATH:$HOME/.dotnet/tools"
 # rye
 [[ -s "$HOME/.rye/env" ]] && source "$HOME/.rye/env"
 
-# SDKMAN
-# THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
 # lima docker
 if [ -e /usr/local/bin/lima ]; then
   export DOCKER_HOST=$(limactl list docker_rosetta --format 'unix://{{"{{"}}.Dir{{"}}"}}/sock/docker.sock')
