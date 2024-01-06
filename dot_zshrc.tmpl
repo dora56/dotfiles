@@ -28,12 +28,7 @@ fpath+=~/.zfunc
 FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 
 # Use modern completion system
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-
-  autoload -Uz compinit
-  compinit
-fi
+autoload -Uz compinit && compinit
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
