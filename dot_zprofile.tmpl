@@ -3,6 +3,9 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 if [ -d "$HOME/.local/share/mise/shims" ]; then
   export PATH="$HOME/.local/share/mise/shims:$PATH"
 fi
+# >>> coursier install directory >>>
+export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
+# <<< coursier install directory <<<
 {{- end }}
 {{- if eq .chezmoi.os "linux" }}
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

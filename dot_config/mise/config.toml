@@ -3,7 +3,6 @@ node = "lts"
 deno = "latest"
 kubectl = "1.28.5"
 java = "openjdk-21.0.1"
-sbt = "1.9.8"
 
 [settings]
 jobs = 4
