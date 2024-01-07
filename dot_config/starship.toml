@@ -1,7 +1,107 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](bg:background fg:gray1)\
+$os\
+[](bg:gray2 fg:gray1)\
+$username\
+[](bg:cyan fg:gray2)\
+$directory\
+[](bg:yellow2 fg:cyan)\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+[](bg:background fg:yellow2)\
+$hg_branch\
+$pijul_channel\
+$docker_context\
+$package\
+$c\
+$cmake\
+$cobol\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$fennel\
+$golang\
+$guix_shell\
+$haskell\
+$haxe\
+$helm\
+$java\
+$julia\
+$kotlin\
+$gradle\
+$lua\
+$nim\
+$nodejs\
+$ocaml\
+$opa\
+$perl\
+$php\
+$pulumi\
+$purescript\
+$python\
+$raku\
+$rlang\
+$red\
+$ruby\
+$rust\
+$scala\
+$solidity\
+$swift\
+$terraform\
+$typst\
+$vlang\
+$vagrant\
+$zig\
+$buf\
+$nix_shell\
+$conda\
+$meson\
+$spack\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$direnv\
+$env_var\
+$crystal\
+$custom\
+$all
+"""
+
 add_newline = false
+
+palette = "colors"
+
+[palettes.colors]
+background = "1E1E1E"
+gray1 = "#D3D7CF"
+gray2 = "#383838"
+black1 = "#17191A"
+yellow1 = "#B89501"
+yellow2 = "#c4a000"
+white1 = "#F2F2F2"
+azure = "#0067BF"
+dotnetpurple = "#4627CE"
+
+[os]
+format = '[ $symbol ]($style)'
+disabled = false
+style = "bold bg:gray1 fg:black1"
 
 [azure]
 disabled = false
+format = '[](bg:azure fg:black1)[ $symbol$subscription ]($style)[](bg:black1 fg:azure)'
+style = "bold bg:azure fg:white"
 
 [time]
 disabled = false
@@ -9,21 +109,188 @@ format = '[\[ $time \]]($style) '
 time_format = '%F %T'
 
 [username]
-format = '[$user]($style) '
+format = '[ $user ]($style)'
 disabled = false
+style_root = "bold bg:gray2 fg:red"
+style_user = "bold bg:gray2 fg:yellow"
 show_always = true
 
+[cmd_duration]
+format = '[](bg:black1 fg:gray1)[   $duration ]($style)[](bg:black1 fg:gray1)'
+style = "bg:gray1 fg:black1"
+min_time = 100
+show_milliseconds = true
+
+[aws]
+symbol = "  "
+
+[buf]
+symbol = " "
+
+[c]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[crystal]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[directory]
+format = '[$path]($style)[$read_only]($read_only_style)'
+style = "bold bg:cyan fg:white"
+read_only = " 󰌾"
+
+[docker_context]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[fennel]
+symbol = " "
+
+[fossil_branch]
+symbol = " "
+
+[git_branch]
+symbol = " "
+format = "[ $symbol$branch(:$remote_branch) ]($style)"
+style = "bold bg:yellow2 fg:black1"
+
+[git_status]
+format = '([ \[$all_status$ahead_behind\] ]($style))'
+style = "bold bg:yellow2 fg:black1"
+
+[dotnet]
+format = "[](bg:dotnetpurple fg:black1)[ $symbol($version )(🎯 $tfm )]($style)[](bg:black1 fg:dotnetpurple)"
+style = "bold bg:dotnetpurple fg:white"
+[golang]
+symbol = " "
+
+[guix_shell]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[haxe]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[hostname]
+ssh_symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[kotlin]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[memory_usage]
+symbol = "󰍛 "
+
+[meson]
+symbol = "󰔷 "
+
+[nim]
+symbol = "󰆥 "
+
+[nix_shell]
+symbol = " "
+
+[nodejs]
+symbol = " "
+format = "[](bg:green fg:black1)[ $symbol($version ) ]($style)[](bg:black1 fg:green)"
+style = "bold bg:green fg:black1"
+
+[ocaml]
+symbol = " "
+
+[os.symbols]
+Alpaquita = " "
+Alpine = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Windows = "󰍲 "
+
 [package]
-symbol = " "
+symbol = "󰏗 "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[pijul_channel]
+symbol = " "
 
 [python]
 symbol = " "
 
 [rlang]
-symbol = "ﳒ "
+symbol = "󰟔 "
 
 [ruby]
 symbol = " "
 
 [rust]
 symbol = " "
+
+[scala]
+symbol = " "
+
+[swift]
+symbol = " "
+
+[zig]
+symbol = " "
