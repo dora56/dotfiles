@@ -163,9 +163,13 @@ export PATH="$PATH:$HOME/.dotnet/tools"
 [[ -s "$HOME/.rye/env" ]] && source "$HOME/.rye/env"
 
 # lima docker
-if [ -e /usr/local/bin/lima ]; then
+if (command -v limactl >/dev/null 2>&1); then
   export DOCKER_HOST=$(limactl list docker_rosetta --format 'unix://{{"{{"}}.Dir{{"}}"}}/sock/docker.sock')
+  export DOCKER_DEFAULT_PLATFORM=linux/amd64
 fi
+
+# mysql
+export PATH="/opt/homebrew/opt/mysql-client@5.7/bin:$PATH"
 
 {{- end}}
 
