@@ -1,0 +1,2 @@
+# shellcheck disable=SC2148
+export PATH=$HOME/.local/share/mise/installs/node/lts/bin:$PATH
