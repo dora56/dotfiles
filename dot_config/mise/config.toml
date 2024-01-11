@@ -3,8 +3,3 @@ node = "lts"
 deno = "latest"
 kubectl = "1.28.5"
 java = "openjdk-21.0.1"
-
-[settings]
-jobs = 4
-asdf_compat = false
-experimental = true
