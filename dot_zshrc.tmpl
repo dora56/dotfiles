@@ -164,8 +164,13 @@ export PATH="$PATH:$HOME/.dotnet/tools"
 
 # lima docker
 if (command -v limactl >/dev/null 2>&1); then
-  export DOCKER_HOST=$(limactl list docker_rosetta --format 'unix://{{"{{"}}.Dir{{"}}"}}/sock/docker.sock')
+  export DOCKER_HOST=unix:///Users/r-hanaoka/.colima/default/docker.sock
   export DOCKER_DEFAULT_PLATFORM=linux/amd64
+fi
+
+# colima
+if (command -v colima >/dev/null 2>&1); then
+  colima completion zsh > "${fpath[1]}/_colima"
 fi
 
 # mysql
