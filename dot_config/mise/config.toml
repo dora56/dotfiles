@@ -1,5 +1,5 @@
 [tools]
 node = "lts"
-deno = "latest"
+deno = "1.42.4"
 kubectl = "1.28.5"
 java = "openjdk-21.0.1"
