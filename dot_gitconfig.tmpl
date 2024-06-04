@@ -56,7 +56,8 @@
         required = true
         clean = git-lfs clean -- %f
 {{- end }}
-
+[alias]
+        pr = pull --rebase
 {{- if (eq .chezmoi.os "linux") }}
 {{-    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 [credential]
