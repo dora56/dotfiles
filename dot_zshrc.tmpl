@@ -159,9 +159,6 @@ if [ -n $DOTNET_ROOT ]; then
 fi
 export PATH="$PATH:$HOME/.dotnet/tools"
 
-# rye
-[[ -s "$HOME/.rye/env" ]] && source "$HOME/.rye/env"
-
 # lima docker
 if (command -v limactl >/dev/null 2>&1); then
   export DOCKER_HOST=unix:///Users/r-hanaoka/.colima/default/docker.sock
@@ -175,7 +172,10 @@ fi
 
 # mysql
 export PATH="/opt/homebrew/opt/mysql-client@5.7/bin:$PATH"
+export PATH="$HOME/.aspire/bin:$PATH"
 
+# uv
+export PATH="${HOME}/.local/bin:$PATH"
 {{- end}}
 
 # wsl2
@@ -231,7 +231,6 @@ if ! ss -a | grep -q "$GPG_AGENT_SOCK"; then
 fi
 
 ##
-export PATH="$HOME/.poetry/bin:$PATH"
 export PATH=$PATH:'/mnt/c/Users/dorad/AppData/Local/Programs/Microsoft VS Code/bin'
 
 ## golang

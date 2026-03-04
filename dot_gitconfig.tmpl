@@ -58,6 +58,8 @@
 {{- end }}
 [alias]
         pr = pull --rebase
+[push]
+       autoSetupRemote = true
 {{- if (eq .chezmoi.os "linux") }}
 {{-    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 [credential]
