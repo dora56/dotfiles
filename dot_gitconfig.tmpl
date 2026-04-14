@@ -1,10 +1,15 @@
-{{- $https_github:= "https://github.com/"}}
-{{- $ssh_github:= "git@github.com:"}}
-{{- $org1:= (onepasswordItemFields "v5je2bkojcs2pgobi3codtha4e").org1.value}}
-{{- $org2:= (onepasswordItemFields "v5je2bkojcs2pgobi3codtha4e").org2.value}}
-{{- $org3:= (onepasswordItemFields "v5je2bkojcs2pgobi3codtha4e").org3.value}}
+{{- $private := get . "private" | default (dict) -}}
+{{- $git := get $private "git" | default (dict) -}}
+{{- $httpsGithub := "https://github.com/" -}}
+{{- $sshGithub := "git@github.com:" -}}
+{{- $ghqRoot := get $git "ghq_root" | default "~/Development/src" -}}
+{{- $ghqWorkRoot := get $git "ghq_work_root" | default "~/Development/work" -}}
+{{- $workGitconfigPath := get $git "work_gitconfig_path" | default "" -}}
+{{- $githubOrgs := get $git "github_orgs" | default (list) -}}
+{{- $use1PasswordSSHSigning := get $git "use_1password_ssh_signing" | default false -}}
+{{- $enableGitLfsFilter := get $git "enable_git_lfs_filter" | default false -}}
 {{- if (eq .chezmoi.os "linux") }}
-{{-    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+{{- if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 [credential "https://github.com"]
 	helper = !/home/linuxbrew/.linuxbrew/Cellar/gh/1.7.0/bin/gh auth git-credential
 {{- end }}
@@ -12,9 +17,6 @@
 [user]
 	email = doradora56@gmail.com
 	name = dora56
-{{- if eq .chezmoi.os "darwin" }}
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQCzb/5crM41fqi32d7e3QRW7ZLXvxQyX8CyfGCnzKn
-{{ end }}
 [init]
 	defaultBranch = main
 
@@ -22,46 +24,49 @@
 	autocrlf = input
 	excludesFile = ~/.gitignore
 
-{{ if eq .chezmoi.os "darwin" -}}
-[includeIf "gitdir:~/Development/work/**"]
-  	path = ~/Development/work/.gitconfig
+[ghq]
+	root = {{ $ghqRoot }}
 
+{{- if and (eq .chezmoi.os "darwin") $workGitconfigPath $ghqWorkRoot }}
+[includeIf "gitdir:{{ $ghqWorkRoot }}/**"]
+	path = {{ $workGitconfigPath }}
+{{- end }}
+
+{{- if and (eq .chezmoi.os "darwin") $use1PasswordSSHSigning }}
 [gpg]
-  	format = ssh
+	format = ssh
 
 [gpg "ssh"]
-  	program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+	program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
 
 [commit]
-  	gpgsign = true
-
-[ghq]
-	root = ~/Development/src
-[ghq "{{print $https_github $org1}}"]
-	root = ~/Development/work
-[ghq "{{print $https_github $org2}}"]
-	root = ~/Development/work
-[ghq "{{print $https_github $org3}}"]
-	root = ~/Development/work
-
-[url "{{print $ssh_github $org1}}"]
-	pushInsteadOf = "{{print $https_github $org1}}"
-[url "{{print $ssh_github $org2}}"]
-	pushInsteadOf = "{{print $https_github $org2}}"
-[url "{{print $ssh_github $org3}}"]
-	pushInsteadOf = "{{print $https_github $org3}}"
-[filter "lfs"]
-        smudge = git-lfs smudge -- %f
-        process = git-lfs filter-process
-        required = true
-        clean = git-lfs clean -- %f
+	gpgsign = true
 {{- end }}
+
+{{- range $org := $githubOrgs }}
+[ghq "{{ print $httpsGithub $org }}"]
+	root = {{ $ghqWorkRoot }}
+
+[url "{{ print $sshGithub $org }}"]
+	pushInsteadOf = "{{ print $httpsGithub $org }}"
+{{- end }}
+
+{{- if $enableGitLfsFilter }}
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+{{- end }}
+
 [alias]
-        pr = pull --rebase
+	pr = pull --rebase
+
 [push]
-       autoSetupRemote = true
+	autoSetupRemote = true
+
 {{- if (eq .chezmoi.os "linux") }}
-{{-    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+{{- if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 [credential]
 	helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager-core.exe
 {{- end }}

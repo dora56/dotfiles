@@ -1,0 +1,25 @@
+[private]
+op_account = ""
+readiness_item = ""
+apply_private_defaults = false
+
+[private.git]
+use_1password_ssh_signing = true
+ghq_root = "~/Development/src"
+ghq_work_root = "~/Development/work"
+work_gitconfig_path = "~/Development/work/.gitconfig"
+github_orgs = []
+enable_git_lfs_filter = false
+
+[private.homebrew]
+extra_formulae = []
+extra_casks = []
+extra_go_packages = []
+extra_cargo_crates = []
+extra_uv_tools = []
+
+[private.vscode]
+extensions = []
+
+[private.app_store]
+apps = []

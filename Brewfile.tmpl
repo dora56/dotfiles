@@ -2,8 +2,6 @@ tap "azure/bicep"
 tap "azure/functions"
 tap "coursier/formulas"
 tap "felixkratz/formulae"
-tap "homebrew/bundle"
-tap "homebrew/cask-fonts"
 tap "jetbrains/utils"
 tap "oven-sh/bun"
 
@@ -22,6 +20,7 @@ brew "bash-completion"
 brew "bat"
 brew "bison"
 brew "gettext"
+brew "go"
 brew "chezmoi"
 brew "cmake"
 brew "gmp"
@@ -92,7 +91,7 @@ brew "qemu"
 brew "lima-additional-guestagents"
 brew "mono-libgdiplus"
 brew "coursier/formulas/coursier"
-brew "colima", restart_service: :changed
+brew "colima"
 brew "newman"
 
 cask "1password", args: { appdir: "/Applications" }
@@ -115,7 +114,6 @@ cask "font-plemol-jp-hs"
 cask "font-plemol-jp-nf"
 cask "font-plemol-jp-nfj"
 cask "ghostty"
-cask "gimp"
 cask "google-chrome", args: { appdir: "/Applications" }
 cask "iterm2", args: { appdir: "/Applications" }
 cask "jetbrains-toolbox", args: { appdir: "/Applications" }
@@ -127,6 +125,7 @@ cask "microsoft-edge", args: { appdir: "/Applications" }
 cask "microsoft-office", args: { appdir: "/Applications" }
 cask "microsoft-teams", args: { appdir: "/Applications" }
 cask "notion", args: { appdir: "/Applications" }
+cask "orbstack"
 cask "powershell"
 cask "raycast", args: { appdir: "/Applications" }
 cask "sequel-ace", args: { appdir: "/Applications" }

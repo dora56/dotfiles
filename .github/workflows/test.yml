@@ -11,7 +11,11 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Test Tools install.
-        run: ./mac-install.sh
+        env:
+          BOOTSTRAP_HOME: ${{ runner.temp }}/bootstrap-home
+        run: |
+          mkdir -p "$BOOTSTRAP_HOME"
+          ./install.sh --phase public
 
       # # 上記までの処理が成功した場合、以下のSlack通知処理が実行される
       # - name: Slack Notification Success

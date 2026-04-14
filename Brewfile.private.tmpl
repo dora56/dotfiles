@@ -1,0 +1,32 @@
+{{- $private := get . "private" | default (dict) -}}
+{{- $homebrew := get $private "homebrew" | default (dict) -}}
+{{- $formulae := get $homebrew "extra_formulae" | default (list) -}}
+{{- $casks := get $homebrew "extra_casks" | default (list) -}}
+{{- $goPackages := get $homebrew "extra_go_packages" | default (list) -}}
+{{- $cargoCrates := get $homebrew "extra_cargo_crates" | default (list) -}}
+{{- $uvTools := get $homebrew "extra_uv_tools" | default (list) -}}
+{{- $vscode := get $private "vscode" | default (dict) -}}
+{{- $extensions := get $vscode "extensions" | default (list) -}}
+{{- $appStore := get $private "app_store" | default (dict) -}}
+{{- $apps := get $appStore "apps" | default (list) -}}
+{{- range $formula := $formulae }}
+brew "{{ $formula }}"
+{{- end }}
+{{- range $cask := $casks }}
+cask "{{ $cask }}"
+{{- end }}
+{{- range $pkg := $goPackages }}
+go "{{ $pkg }}"
+{{- end }}
+{{- range $crate := $cargoCrates }}
+cargo "{{ $crate }}"
+{{- end }}
+{{- range $tool := $uvTools }}
+uv "{{ $tool }}"
+{{- end }}
+{{- range $extension := $extensions }}
+vscode "{{ $extension }}"
+{{- end }}
+{{- range $app := $apps }}
+mas "{{ get $app "name" }}", id: {{ get $app "id" }}
+{{- end }}

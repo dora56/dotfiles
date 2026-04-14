@@ -1,0 +1,39 @@
+syntax on
+set cursorline
+set nobackup
+set autoread
+set number
+set showcmd
+set showmode
+set showmatch
+set autoindent smartindent
+set smarttab
+set scrolloff=5
+filetype on
+filetype indent on
+filetype plugin on
+
+let &colorcolumn=join(range(81,999),",")
+highlight ColorColumn ctermbg=235 guibg=#001D2F
+
+set autoindent
+set smartindent
+set expandtab
+set tabstop=2
+set shiftwidth=2
+
+set noerrorbells
+set visualbell
+
+set hlsearch
+set showmatch
+
+set guioptions=aAace
+set clipboard=unnamed
+
+map <F2> :NERDTreeToggle<CR>
+
+inoremap {      {}<Left>
+inoremap {<CR>  {<CR>}<Esc>O
+inoremap {{     {
+inoremap {}     {}
